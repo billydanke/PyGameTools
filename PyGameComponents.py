@@ -4,7 +4,7 @@ import ColorMath
 import EventManager
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self,src,x,y,width=-1,height=-1, id=""):
+    def __init__(self,src,x,y,width=-1,height=-1, isDrawn = True, id=""):
         super(Entity,self).__init__()
 
         self.width = width
@@ -28,7 +28,7 @@ class Entity(pygame.sprite.Sprite):
             self.surf.get_rect().height = height
 
         self.id = id
-        self.isDrawn = True
+        self.isDrawn = isDrawn
 
     def changeSrc(self,src):
         self.surf = pygame.image.load(src).convert_alpha()
@@ -44,7 +44,7 @@ class Entity(pygame.sprite.Sprite):
             screen.blit(self.surf,(self.rect.x,self.rect.y))
 
 class Rectangle(pygame.sprite.Sprite):
-    def __init__(self,x,y,width,height,color, alpha = 255, borderWidth = 0, borderRadius = 0, id=""):
+    def __init__(self,x,y,width,height,color, alpha = 255, borderWidth = 0, borderRadius = 0, isDrawn = True, id=""):
         self.surf = pygame.Surface([width,height],pygame.SRCALPHA)
 
         self.x = x
@@ -59,7 +59,7 @@ class Rectangle(pygame.sprite.Sprite):
         self.surf.set_alpha(self.alpha)
 
         self.id = id
-        self.isDrawn = True
+        self.isDrawn = isDrawn
 
     def setPosition(self,x,y):
         self.x = x
@@ -89,14 +89,15 @@ class Rectangle(pygame.sprite.Sprite):
             #screen.blit(self.surf,(self.rect.x,self.rect.y))
 
 class Circle():
-    def __init__(self,x,y,radius,color,width = 0):
+    def __init__(self,x,y,radius,color,width = 0, isDrawn=True, id=""):
         self.x = x
         self.y = y
         self.radius = radius
         self.color = color
         self.width = width
 
-        self.isDrawn = True
+        self.isDrawn = isDrawn
+        self.id = id
 
     def setPosition(self,x,y):
         self.x = x
@@ -107,12 +108,15 @@ class Circle():
             pygame.draw.circle(screen,self.color,(self.x,self.y),self.radius,self.width)
 
 class Line():
-    def __init__(self,startPoint,endPoint,lineWidth,color=(0,0,0),isDrawn=False):
+    def __init__(self,startPoint,endPoint,lineWidth,color=(0,0,0),isDrawn=True,id=""):
         self.startPoint = startPoint
         self.endPoint = endPoint
         self.lineWidth = lineWidth
         self.color = color
+        
         self.isDrawn = isDrawn
+        self.id = id
+
     def draw(self,screen):
         if(self.isDrawn):
             pygame.draw.line(screen,self.color,self.startPoint,self.endPoint,self.lineWidth)
@@ -151,7 +155,7 @@ class Menu(Rectangle):
             item.draw(screen)
 
 class Text():
-    def __init__(self,x,y,text,font,size,textColor,bold=False,aa=True):
+    def __init__(self,x,y,text,font,size,textColor,bold=False,aa=True,isDrawn = True,id=""):
         self.x = x
         self.y = y
         self.stringText = text
@@ -167,7 +171,8 @@ class Text():
         self.rect = self.text.get_rect()
         self.rect.center = (self.x,self.y)
 
-        self.isDrawn = True
+        self.isDrawn = isDrawn
+        self.id = id
 
     def changeText(self,text):
         self.stringText = text
@@ -186,7 +191,7 @@ class Text():
             screen.blit(self.text,self.rect)
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, unpressedSrc, pressedSrc,x,y, pressFunc, releaseFunc, width= -1,height= -1):
+    def __init__(self, unpressedSrc, pressedSrc,x,y, pressFunc, releaseFunc, width= -1,height= -1,isDrawn = True,id=""):
         super(Button,self).__init__()
         self.unpressedSrc = unpressedSrc
         self.pressedSrc = pressedSrc
@@ -205,7 +210,9 @@ class Button(pygame.sprite.Sprite):
 
         self.rect = self.surf.get_rect().move(self.x,self.y)
 
-        self.isDrawn = True
+        self.id = id
+
+        self.isDrawn = isDrawn
         self.pressed = False
         self.moveWithMouse = False
 
@@ -251,7 +258,7 @@ class Button(pygame.sprite.Sprite):
             screen.blit(self.surf,(self.rect.x,self.rect.y))
 
 class TextButton(pygame.sprite.Sprite):
-    def __init__(self,x,y,text,fontSize,textColor, pressFunc, releaseFunc, font='arial', hoverColor=None, pressColor = None, isToggle=False, selectedColor=None, selectedHoverColor = None):
+    def __init__(self,x,y,text,fontSize,textColor, pressFunc, releaseFunc, font='arial', hoverColor=None, pressColor = None, isToggle=False, selectedColor=None, selectedHoverColor = None, isDrawn = True, id=""):
         self.x = x
         self.y = y
         self.stringText = text
@@ -273,7 +280,9 @@ class TextButton(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-        self.isDrawn = True
+        self.id = id
+
+        self.isDrawn = isDrawn
         self.pressed = False
         self.selected = False
 
