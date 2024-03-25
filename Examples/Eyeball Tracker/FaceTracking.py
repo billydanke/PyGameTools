@@ -36,6 +36,8 @@ def StartCamera():
     global cameraReference
     if(cameraReference == None):
         cameraReference = cv.VideoCapture(0)
+        cameraReference.set(cv.CAP_PROP_FRAME_WIDTH,1920)
+        cameraReference.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)
 
 def CloseCamera():
     global cameraReference

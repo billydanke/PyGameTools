@@ -89,14 +89,16 @@ class Rectangle(pygame.sprite.Sprite):
             #screen.blit(self.surf,(self.rect.x,self.rect.y))
 
 class Circle():
-    def __init__(self,x,y,radius,color,width = 0):
+    def __init__(self,x,y,radius,color,alpha=255,width = 0, isDrawn=True, id=""):
         self.x = x
         self.y = y
         self.radius = radius
         self.color = color
+        self.alpha = alpha
         self.width = width
 
-        self.isDrawn = True
+        self.isDrawn = isDrawn
+        self.id = id
 
     def setPosition(self,x,y):
         self.x = x
@@ -104,7 +106,12 @@ class Circle():
     
     def draw(self,screen):
         if(self.isDrawn):
-            pygame.draw.circle(screen,self.color,(self.x,self.y),self.radius,self.width)
+            # Create a new surface with SRCALPHA to support per-pixel alpha
+            temp_surface = pygame.Surface((2*self.radius, 2*self.radius), pygame.SRCALPHA)
+            # Draw the circle on the temp surface instead of the screen
+            pygame.draw.circle(temp_surface, self.color + (self.alpha,), (self.radius, self.radius), self.radius, self.width)
+            # Blit the temp surface onto the screen at the circle's position
+            screen.blit(temp_surface, (self.x - self.radius, self.y - self.radius))
 
 class Line():
     def __init__(self,startPoint,endPoint,lineWidth,color=(0,0,0),isDrawn=False):
