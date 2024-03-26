@@ -1,6 +1,4 @@
 import pygame
-import math
-import ColorMath
 import EventManager
 
 class Entity(pygame.sprite.Sprite):
@@ -29,6 +27,11 @@ class Entity(pygame.sprite.Sprite):
 
         self.id = id
         self.isDrawn = isDrawn
+
+    def setPosition(self,x,y):
+        self.x = x
+        self.y = y
+        self.rect = self.surf.get_rect().move(self.x,self.y)
 
     def changeSrc(self,src):
         self.surf = pygame.image.load(src).convert_alpha()
@@ -122,6 +125,10 @@ class Line():
         
         self.isDrawn = isDrawn
         self.id = id
+
+    def setPosition(self,x1,y1, x2,y2):
+        self.startPoint = (x1,y1)
+        self.endPoint = (x2,y2)
 
     def draw(self,screen):
         if(self.isDrawn):
