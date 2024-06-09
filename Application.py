@@ -24,7 +24,7 @@ def draw():
     pygame.display.flip()
 
 def logicLoop():
-    EventManager.logicClock.tick(33) # This is your wait between frames. In this case, 33ms = ~30fps.
+    EventManager.logicClock.tick(60) # Fps limiter. Currently, this is set to 60fps.
     EventManager.EventManager.Check()
 
     # This is where you can add whatever logic needs to happen every frame
